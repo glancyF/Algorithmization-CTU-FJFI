@@ -28,7 +28,7 @@
 
 # testovat i moznost, ze cesta neexistuje (neni nutne na zapocet)
 # pokud si ale chcete zkusit trosku vylepsit algoritmus, tak to muzete prepnout na True
-TEST_ROUTE_NOT_EXIST = False
+TEST_ROUTE_NOT_EXIST = True
 
 # vypisovat vysledky hledani tras a dalsi texty (pro ladeni se to hodi)
 PRINT_RESULTS = True
@@ -70,7 +70,6 @@ class Map:
         unvisited = list(self.graph.keys())
 
         while unvisited:
-
             min_dist = float('inf')
             current = None
             for node in unvisited:
@@ -78,7 +77,7 @@ class Map:
                     min_dist = dist1[node]
                     current = node
 
-            if dist1[current] == float('inf'):
+            if current is None or dist1[current] == float('inf'):
                 break
 
             unvisited.remove(current)
