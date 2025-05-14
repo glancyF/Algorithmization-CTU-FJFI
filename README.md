@@ -1,0 +1,1 @@
+# Algorithmization-CTU-FJFI
