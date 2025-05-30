@@ -1,8 +1,8 @@
 class Node:
     def __init__(self, data):
+        self.data = data
         self.next = None
         self.prev = None
-        self.data = data
 
 
 class DoubleLinkedList:
@@ -29,7 +29,7 @@ class DoubleLinkedList:
             new_node.prev = self.tail
             self.tail.next = new_node
             self.tail = new_node
-        self.length +=1
+        self.length += 1
 
     def remove_from_head(self):
         if not self.head:
@@ -44,11 +44,11 @@ class DoubleLinkedList:
         return removed_data
 
     def remove_from_tail(self):
+        removed_data = self.tail.data
         if not self.tail:
             return
-        removed_data = self.tail.data
-        if self.head == self.tail:
-            self.head = self.tail = None
+        if self.tail == self.head:
+            self.tail = self.head = None
         else:
             self.tail = self.tail.prev
             self.tail.next = None
@@ -64,6 +64,7 @@ class DoubleLinkedList:
             current = current.next
             index += 1
         return -1
+
     def delete_by_value(self, value):
         current = self.head
         while current:
@@ -85,29 +86,38 @@ class DoubleLinkedList:
             raise IndexError
         if index == 0:
             self.add_to_head(value)
+            return
         if index == self.length:
             self.add_to_tail(value)
-        else:
-            new_node = Node(value)
-            current = self.head
-            for _ in range(index):
-                current = current.next
-            prev_node = current.prev
-            prev_node.next = new_node
-            new_node.prev = prev_node
-            new_node.next = current
-            current.prev = new_node
-            self.length += 1
+            return
+        new_node = Node(value)
+        current = self.head
+        for i in range(index):
+            current = current.next
+        prev_node = current.prev
+        prev_node.next = new_node
+        new_node.prev = prev_node
+        new_node.next = current
+        current.prev = new_node
+        self.length += 1
 
-    def get_by_index(self, index):
-        if index < 0 or index >= self.length:
+    def get_by_index(self, value):
+        if index < 0 or index > self.length:
             raise IndexError
         if index < self.length // 2:
             current = self.head
-            for _ in range(index):
+            for i in range(index):
                 current = current.next
         else:
             current = self.tail
-            for _ in range(self.length - index - 1):
+            for i in range(self.length - index - 1):
                 current = current.prev
         return current.data
+
+    def __str__(self):
+        values = []
+        current = self.head
+        while current:
+            values.append(str(current.data))
+            current = current.next
+        return " <-> ".join(values)
