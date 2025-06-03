@@ -10,11 +10,13 @@ class BinaryHeap:
         self._heapify_up(len(self.heap) - 1)
 
     def _heapify_up(self, index):
-        parent_index = (index - 1) // 2
-        while parent_index >= 0 and self.heap[parent_index] > self.heap[index]:
-            self.heap[parent_index], self.heap[index] = self.heap[index], self.heap[parent_index]
-        index = parent_index
-        parent_index = (index - 1) // 2
+        while index > 0:
+            parent_index = (index - 1) // 2
+            if self.heap[parent_index] > self.heap[index]:
+                self.heap[parent_index], self.heap[index] = self.heap[index], self.heap[parent_index]
+                index = parent_index
+            else:
+                break
 
     def get_min(self):
         if self.is_empty():
